@@ -136,7 +136,7 @@ export default function Home() {
           <Reveal className="experience-card kids-card">
             <div className="experience-photo">
               <Image src="/images/kids logo.jpg"
-                alt="NIK Kids" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"contain", padding:"24px"}} />
+                alt="NIK Kids" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"cover"}} />
               <span className="photo-tag">FOR OUR LITTLE ROYALS</span>
             </div>
             <div className="experience-info">
@@ -151,7 +151,7 @@ export default function Home() {
           <Reveal delay={0.12} className="experience-card adults-card">
             <div className="experience-photo">
               <Image src="/images/Adult logo.jpg"
-                alt="NIK Adults" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"cover"}} />
+                alt="NIK Adults" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"cover", transform:"scale(0.72)", transformOrigin:"center center"}} />
               <span className="photo-tag">FOR THE GROWN-UPS</span>
             </div>
             <div className="experience-info">
