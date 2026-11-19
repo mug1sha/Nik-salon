@@ -136,7 +136,7 @@ export default function Home() {
           <Reveal className="experience-card kids-card">
             <div className="experience-photo">
               <Image src="/images/kids logo.jpg"
-                alt="NIK Kids" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"cover"}} />
+                alt="NIK Kids" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"contain", padding:"24px"}} />
               <span className="photo-tag">FOR OUR LITTLE ROYALS</span>
             </div>
             <div className="experience-info">
