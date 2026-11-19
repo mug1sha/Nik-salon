@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, VolumeX, Play, ArrowUpRight, Instagram } from "lucide-react";
+import { Volume2, VolumeX, Play, ArrowUpRight, Instagram, Scissors, User } from "lucide-react";
 
 /* ── data ───────────────────────────────────────────────────── */
 const items = [
@@ -205,7 +205,9 @@ export default function GalleryReel({ onBook }: { onBook: () => void }) {
             className={`reel-filter-btn${filter === f ? " active" : ""}`}
             onClick={() => setFilter(f)}
           >
-            {f === "ALL" ? "All reels" : f === "KIDS" ? "👶 Kids" : "🧑 Adults"}
+            {f === "KIDS" && <Scissors size={13} />}
+            {f === "ADULTS" && <User size={13} />}
+            {f === "ALL" ? "All reels" : f === "KIDS" ? "Kids" : "Adults"}
           </button>
         ))}
       </div>
