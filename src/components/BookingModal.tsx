@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowUpRight, MapPin, User, CalendarDays, MessageSquare, ChevronDown, Scissors } from "lucide-react";
+import { X, ArrowUpRight, MapPin, User, CalendarDays, MessageSquare, ChevronDown, Scissors, Star } from "lucide-react";
 
 const BRANCHES = [
   { label: "Kicukiro – Silverback Mall",      tel: "250791675841" },
@@ -117,7 +117,18 @@ export default function BookingModal({ isOpen, onClose }: Props) {
                 <div className="bm-success-icon">✳</div>
                 <h3>WhatsApp is opening!</h3>
                 <p>Your booking request is ready to send. NIK will reply with available times as soon as possible.</p>
-                <button className="bm-btn-green" onClick={onClose}>Done</button>
+                <div className="bm-success-actions">
+                  <button className="bm-btn-green" onClick={onClose}>Done</button>
+                  <a
+                    className="bm-btn-review"
+                    href="https://www.google.com/maps/search/?api=1&query=NIK+Salon+Kigali+Rwanda"
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={onClose}
+                  >
+                    <Star size={14} /> Leave a review
+                  </a>
+                </div>
               </div>
             ) : (
               <form className="bm-form" onSubmit={handleSend}>

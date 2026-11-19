@@ -10,6 +10,7 @@ import {
 import Reveal from "@/components/Reveal";
 import BookingModal from "@/components/BookingModal";
 import GalleryReel from "@/components/GalleryReel";
+import ReviewTicker from "@/components/ReviewTicker";
 
 const branches = [
   { kicker: "KICUKIRO",    name: "Silverback Mall",         area: "Gisimenti / Kicukiro, Kigali",  phone: "+250 791 675 841", tel: "+250791675841", maps: "Silverback+Mall+Kigali+Rwanda" },
@@ -186,10 +187,15 @@ export default function Home() {
         <div className="review-spark">✳</div>
         <div className="eyebrow"><span className="eyebrow-line"/> KIND WORDS, BIG SMILES</div>
         <h2>Love looks good<br/>on <em>everyone.</em></h2>
-        <div className="review-number">4.9<span>★</span></div>
-        <p>Rated by the people who make NIK what it is.</p>
+        <div className="review-meta">
+          <div className="review-number">4.9<span>★</span></div>
+          <div className="review-meta-right">
+            <p>Rated by the people who make NIK what it is.</p>
+            <span className="review-count">174 GOOGLE REVIEWS*</span>
+          </div>
+        </div>
+        <ReviewTicker />
         <div className="review-foot">
-          <span>174 GOOGLE REVIEWS*</span>
           <span>*Rating and review count supplied for this demo; verify before publishing.</span>
         </div>
       </section>
