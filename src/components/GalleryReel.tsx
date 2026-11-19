@@ -2,7 +2,10 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Volume2, VolumeX, Play, ArrowUpRight, Instagram, Scissors, User } from "lucide-react";
+import {
+  Volume2, VolumeX, Play, ArrowUpRight, Instagram,
+  Scissors, User, X, ChevronLeft, ChevronRight,
+} from "lucide-react";
 
 /* ── data ───────────────────────────────────────────────────── */
 const items = [
@@ -62,46 +65,36 @@ const items = [
 
 /* ── VideoTile ──────────────────────────────────────────────── */
 function VideoTile({
-  item, featured, onBook,
+  item, featured, onClick,
 }: {
   item: (typeof items)[0];
   featured: boolean;
-  onBook: () => void;
+  onClick: () => void;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
-  const [hovered, setHovered] = useState(false);
 
-  /* autoplay on hover */
   const handleEnter = useCallback(() => {
-    setHovered(true);
     ref.current?.play().catch(() => {});
     setPlaying(true);
   }, []);
+
   const handleLeave = useCallback(() => {
-    setHovered(false);
     ref.current?.pause();
-    ref.current && (ref.current.currentTime = 0);
+    if (ref.current) ref.current.currentTime = 0;
     setPlaying(false);
-    setMuted(true);
   }, []);
-
-  /* sync muted state to video element */
-  useEffect(() => {
-    if (ref.current) ref.current.muted = muted;
-  }, [muted]);
-
-  const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setMuted((m) => !m);
-  };
 
   return (
     <div
       className={`vt-tile${featured ? " vt-featured" : ""}`}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && onClick()}
+      aria-label={`Play ${item.label}`}
     >
       <video
         ref={ref}
@@ -113,7 +106,7 @@ function VideoTile({
         className="vt-video"
       />
 
-      {/* play hint when idle */}
+      {/* play hint */}
       <AnimatePresence>
         {!playing && (
           <motion.div
@@ -121,77 +114,183 @@ function VideoTile({
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.18 }}
           >
-            <Play size={featured ? 28 : 20} fill="currentColor" />
+            <Play size={featured ? 26 : 18} fill="currentColor" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* overlay — always present, fades out while playing */}
+      {/* info overlay — fades while playing */}
       <motion.div
         className="vt-overlay"
         animate={{ opacity: playing ? 0 : 1 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.28 }}
       >
         <span className="vt-tag">{item.type}</span>
         <div className="vt-text">
           <h3 className="vt-title">{item.label}</h3>
           <p className="vt-caption">{item.caption}</p>
-          {featured && (
-            <button className="vt-book" onClick={onBook}>
-              Book a visit <ArrowUpRight size={14} />
-            </button>
-          )}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ── Lightbox ───────────────────────────────────────────────── */
+function Lightbox({
+  items: list,
+  index,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  items: (typeof items);
+  index: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(false);
+  const item = list[index];
+
+  /* keyboard nav */
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose, onPrev, onNext]);
+
+  /* body scroll lock */
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  /* autoplay on item change */
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = muted;
+    v.currentTime = 0;
+    v.play().catch(() => {});
+  }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /* sync muted */
+  useEffect(() => {
+    if (ref.current) ref.current.muted = muted;
+  }, [muted]);
+
+  return (
+    <motion.div
+      className="lb-backdrop"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.22 }}
+      onClick={onClose}
+    >
+      {/* video card — stop propagation so clicks inside don't close */}
+      <motion.div
+        className="lb-card"
+        initial={{ scale: 0.93, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.93, opacity: 0 }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <video
+          ref={ref}
+          key={item.src}
+          src={item.src}
+          autoPlay
+          loop
+          playsInline
+          muted={muted}
+          className="lb-video"
+        />
+
+        {/* top bar */}
+        <div className="lb-top">
+          <span className="lb-counter">{index + 1} / {list.length}</span>
+          <button className="lb-close" onClick={onClose} aria-label="Close">
+            <X size={18} />
+          </button>
+        </div>
+
+        {/* bottom info + mute */}
+        <div className="lb-bottom">
+          <div>
+            <span className="lb-tag">{item.type}</span>
+            <p className="lb-title">{item.label}</p>
+            <p className="lb-caption">{item.caption}</p>
+          </div>
+          <button
+            className="lb-mute"
+            onClick={() => setMuted((m) => !m)}
+            aria-label={muted ? "Unmute" : "Mute"}
+          >
+            {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          </button>
         </div>
       </motion.div>
 
-      {/* mute toggle — visible while playing */}
-      <AnimatePresence>
-        {playing && (
-          <motion.button
-            className="vt-mute"
-            onClick={toggleMute}
-            aria-label={muted ? "Unmute" : "Mute"}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 6 }}
-            transition={{ duration: 0.2 }}
-          >
-            {muted ? <VolumeX size={14} /> : <Volume2 size={14} />}
-          </motion.button>
-        )}
-      </AnimatePresence>
-    </div>
+      {/* prev / next */}
+      <button
+        className="lb-arrow lb-prev"
+        onClick={(e) => { e.stopPropagation(); onPrev(); }}
+        aria-label="Previous"
+      >
+        <ChevronLeft size={24} />
+      </button>
+      <button
+        className="lb-arrow lb-next"
+        onClick={(e) => { e.stopPropagation(); onNext(); }}
+        aria-label="Next"
+      >
+        <ChevronRight size={24} />
+      </button>
+    </motion.div>
   );
 }
 
 /* ── GalleryReel ────────────────────────────────────────────── */
 export default function GalleryReel({ onBook }: { onBook: () => void }) {
   const [filter, setFilter] = useState<"ALL" | "KIDS" | "ADULTS">("ALL");
+  const [lightbox, setLightbox] = useState<number | null>(null);
 
   const shown = filter === "ALL" ? items : items.filter((i) => i.type === filter);
 
+  const openAt = (idx: number) => setLightbox(idx);
+  const close = () => setLightbox(null);
+  const prev = () => setLightbox((i) => (i === null ? 0 : (i - 1 + shown.length) % shown.length));
+  const next = () => setLightbox((i) => (i === null ? 0 : (i + 1) % shown.length));
+
+  /* close lightbox when filter changes */
+  const handleFilter = (f: "ALL" | "KIDS" | "ADULTS") => {
+    setLightbox(null);
+    setFilter(f);
+  };
+
   return (
     <section className="reel-section section-pad" id="gallery">
+
       {/* heading */}
       <div className="reel-head">
         <div className="reel-head-left">
           <div className="eyebrow reel-eyebrow">
             <span className="eyebrow-line eyebrow-line-light" /> A LITTLE INSPIRATION
           </div>
-          <h2 className="reel-h2">
-            Looks worth<br /><em>loving.</em>
-          </h2>
+          <h2 className="reel-h2">Looks worth<br /><em>loving.</em></h2>
         </div>
         <div className="reel-head-right">
-          <p>Real NIK moments — hover any clip to watch it come alive.</p>
-          <a
-            className="reel-ig"
-            href="https://www.instagram.com/niksalon_kids/"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <p>Real NIK moments — hover to preview, click to watch full screen.</p>
+          <a className="reel-ig" href="https://www.instagram.com/niksalon_kids/" target="_blank" rel="noreferrer">
             <Instagram size={15} /> Follow NIK on Instagram <ArrowUpRight size={13} />
           </a>
         </div>
@@ -203,7 +302,7 @@ export default function GalleryReel({ onBook }: { onBook: () => void }) {
           <button
             key={f}
             className={`reel-filter-btn${filter === f ? " active" : ""}`}
-            onClick={() => setFilter(f)}
+            onClick={() => handleFilter(f)}
           >
             {f === "KIDS" && <Scissors size={13} />}
             {f === "ADULTS" && <User size={13} />}
@@ -212,28 +311,41 @@ export default function GalleryReel({ onBook }: { onBook: () => void }) {
         ))}
       </div>
 
-      {/* grid */}
+      {/* fixed-height scrollable navy container */}
       <div className="reel-container">
         <AnimatePresence mode="wait">
           <motion.div
             key={filter}
             className="reel-grid"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
           >
             {shown.map((item, i) => (
               <VideoTile
                 key={item.id}
                 item={item}
                 featured={i === 0}
-                onBook={onBook}
+                onClick={() => openAt(i)}
               />
             ))}
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* lightbox */}
+      <AnimatePresence>
+        {lightbox !== null && (
+          <Lightbox
+            items={shown}
+            index={lightbox}
+            onClose={close}
+            onPrev={prev}
+            onNext={next}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
