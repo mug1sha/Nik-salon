@@ -37,7 +37,6 @@ export default function InnerPage({ eyebrow, title, accent, description, image, 
         <div className="inner-card-grid">
           {cards.map((card, i) => <article key={card.title}><span>0{i+1}</span><Sparkles size={19}/><h3>{card.title}</h3><p>{card.description}</p></article>)}
         </div>
-        <p className="inner-note">Service names and descriptions are concept placeholders. Confirm NIK's actual services and prices before publishing.</p>
       </section>
       <section className="inner-cta"><div><span>YOUR NEXT NIK MOMENT</span><h2>Let's make it<br/><em>a lovely one.</em></h2></div><a className="button button-navy" href={whatsapp} target="_blank" rel="noreferrer">Contact NIK <ArrowUpRight size={17}/></a></section>
       <footer className="inner-footer"><Link href="/">NIK SALON</Link><span>Beauty for every generation.</span><Link href="/locations">Find a location <ArrowUpRight size={14}/></Link></footer>

@@ -122,9 +122,7 @@ export default function LocationsPage() {
             </article>
           ))}
         </div>
-        <p className="loc-disclaimer">
-          Branch details sourced from NIK&apos;s social profile. Please confirm addresses, contacts and opening hours directly with the business before publishing.
-        </p>
+        
       </section>
 
       {/* Hours summary */}

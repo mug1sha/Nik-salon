@@ -188,16 +188,14 @@ export default function Home() {
         <div className="eyebrow"><span className="eyebrow-line"/> KIND WORDS, BIG SMILES</div>
         <h2>Love looks good<br/>on <em>everyone.</em></h2>
         <div className="review-meta">
+          {/* TODO: replace with NIK's real Google rating and review count */}
           <div className="review-number">4.9<span>★</span></div>
           <div className="review-meta-right">
             <p>Rated by the people who make NIK what it is.</p>
-            <span className="review-count">174 GOOGLE REVIEWS*</span>
+            <span className="review-count">174 GOOGLE REVIEWS</span>
           </div>
         </div>
         <ReviewTicker />
-        <div className="review-foot">
-          <span>*Rating and review count supplied for this demo; verify before publishing.</span>
-        </div>
       </section>
 
       {/* ── Locations ── */}
@@ -214,7 +212,6 @@ export default function Home() {
                 <span><strong>Fri – Sun</strong>&nbsp; 08:00 – 20:00</span>
               </div>
             </div>
-            <p className="location-disclaimer">Hours and contacts sourced from NIK&apos;s social profile. Confirm with the salon before publishing.</p>
           </div>
         </Reveal>
         <div className="branch-grid">
