@@ -9,13 +9,7 @@ import {
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import BookingModal from "@/components/BookingModal";
-
-const gallery = [
-  { title: "Little details, big smiles",    type: "KIDS",   image: "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=900&q=85" },
-  { title: "A style that feels like you",   type: "ADULTS", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=85" },
-  { title: "Made for their big day",        type: "KIDS",   image: "https://images.unsplash.com/photo-1519238263530-99d8f4d6c7a4?auto=format&fit=crop&w=900&q=85" },
-  { title: "Confidence in every detail",   type: "ADULTS", image: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=900&q=85" },
-];
+import GalleryReel from "@/components/GalleryReel";
 
 const branches = [
   { kicker: "KICUKIRO",    name: "Silverback Mall",         area: "Gisimenti / Kicukiro, Kigali",  phone: "+250 791 675 841", tel: "+250791675841", maps: "Silverback+Mall+Kigali+Rwanda" },
@@ -26,10 +20,8 @@ const branches = [
 
 export default function Home() {
   const [menuOpen,    setMenuOpen]    = useState(false);
-  const [filter,      setFilter]      = useState("ALL");
   const [bookingOpen, setBookingOpen] = useState(false);
 
-  const shown    = filter === "ALL" ? gallery : gallery.filter((g) => g.type === filter);
   const closeMenu = () => setMenuOpen(false);
   const openBook  = () => setBookingOpen(true);
 
@@ -187,40 +179,7 @@ export default function Home() {
       </section>
 
       {/* ── Gallery ── */}
-      <section className="gallery-section section-pad" id="gallery">
-        <Reveal>
-          <div className="section-heading gallery-heading">
-            <div>
-              <div className="eyebrow"><span className="eyebrow-line"/> A LITTLE INSPIRATION</div>
-              <h2>Looks worth<br/><em>loving.</em></h2>
-            </div>
-            <div className="gallery-side">
-              <p>Explore the creativity, care and personality behind every NIK look.</p>
-              <a className="text-link" href="https://www.instagram.com/niksalon_kids/" target="_blank" rel="noreferrer">
-                <Instagram size={17}/> Follow NIK on Instagram <ArrowUpRight size={16}/>
-              </a>
-            </div>
-          </div>
-        </Reveal>
-        <div className="gallery-filters">
-          {["ALL", "KIDS", "ADULTS"].map((item) => (
-            <button key={item} onClick={() => setFilter(item)} className={filter === item ? "active" : ""}>{item}</button>
-          ))}
-        </div>
-        <motion.div layout className="gallery-grid">
-          <AnimatePresence mode="popLayout">
-            {shown.map((item, index) => (
-              <motion.article layout key={item.title} className={`gallery-item gallery-item-${index}`}
-                initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: .96 }} transition={{ duration: .35 }}>
-                <Image src={item.image} alt={item.title} fill sizes="(max-width:650px) 46vw, 23vw" style={{objectFit:"cover"}} />
-                <div className="gallery-overlay"><span>{item.type}</span><h3>{item.title}</h3></div>
-              </motion.article>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-        <p className="gallery-disclaimer">Gallery imagery is illustrative demo photography. Replace with NIK&apos;s approved original work before launch.</p>
-      </section>
+      <GalleryReel onBook={openBook} />
 
       {/* ── Reviews ── */}
       <section className="review-section">
