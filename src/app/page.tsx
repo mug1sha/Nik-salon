@@ -94,7 +94,7 @@ export default function Home() {
         <div className="hero-visual">
           <div className="hero-image-main">
             <Image
-              src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1400&q=95&crop=faces,center"
+              src="/images/BIG hero.jpg"
               alt="Confident woman with beautiful styled hair"
               fill sizes="(max-width:650px) 76vw, 40vw"
               style={{objectFit:"cover", objectPosition:"center top"}} priority
@@ -102,7 +102,7 @@ export default function Home() {
           </div>
           <div className="hero-image-small">
             <Image
-              src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=90&crop=faces,center"
+              src="/images/small hero.jpg"
               alt="Child getting a joyful haircut at the salon"
               fill sizes="(max-width:650px) 36vw, 20vw"
               style={{objectFit:"cover", objectPosition:"center top"}}
