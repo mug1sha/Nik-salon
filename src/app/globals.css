@@ -71,6 +71,9 @@
 .bm-success-actions{display:flex;flex-direction:column;gap:10px;align-items:center}
 .bm-btn-review{display:inline-flex;align-items:center;gap:8px;border:1.5px solid #dce7e0;background:#fff;border-radius:100px;padding:12px 22px;font-size:13px;font-weight:700;font-family:inherit;color:var(--navy);cursor:pointer;transition:border-color .15s,color .15s;text-decoration:none}
 .bm-btn-review:hover{border-color:var(--green);color:var(--green)}
+.bm-stars{display:flex;gap:4px}
+.bm-star-btn{background:none;border:0;padding:2px;cursor:pointer;color:#dce7e0;transition:color .12s;line-height:0}
+.bm-star-btn.lit{color:#e6b91d}
 
 /* ── Gallery Reel ───────────────────────────────────────────── */
 .reel-section{background:#fff;padding:100px 9%}

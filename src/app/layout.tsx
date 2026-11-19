@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ReviewsProvider } from "@/components/ReviewsContext";
 
 export const metadata: Metadata = {
   title: "NIK Salon | Beauty for Every Generation",
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ReviewsProvider>{children}</ReviewsProvider>
+      </body>
     </html>
   );
 }
