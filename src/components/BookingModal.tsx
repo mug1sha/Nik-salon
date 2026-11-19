@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowUpRight, MapPin, User, Users, CalendarDays, MessageSquare, ChevronDown } from "lucide-react";
+import { X, ArrowUpRight, MapPin, User, CalendarDays, MessageSquare, ChevronDown, Scissors } from "lucide-react";
 
 const BRANCHES = [
   { label: "Kicukiro – Silverback Mall",      tel: "250791675841" },
@@ -131,14 +131,14 @@ export default function BookingModal({ isOpen, onClose }: Props) {
                       className={`bm-toggle-btn${type === "Kids" ? " active kids" : ""}`}
                       onClick={() => setType("Kids")}
                     >
-                      👶 Kids
+                      <Scissors size={14} /> Kids
                     </button>
                     <button
                       type="button"
                       className={`bm-toggle-btn${type === "Adults" ? " active adults" : ""}`}
                       onClick={() => setType("Adults")}
                     >
-                      🧑 Adults
+                      <User size={14} /> Adults
                     </button>
                   </div>
                 </div>

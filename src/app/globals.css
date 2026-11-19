@@ -52,7 +52,7 @@
 .bm-select{appearance:none;padding-right:34px;cursor:pointer}
 .bm-select-icon{position:absolute;right:11px;top:50%;transform:translateY(-50%);pointer-events:none;color:#7a9094}
 .bm-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.bm-toggle-btn{border:1.5px solid #dce7e0;background:#fff;border-radius:8px;padding:11px;font-size:12px;font-weight:700;color:#778a8e;cursor:pointer;transition:all .15s}
+.bm-toggle-btn{border:1.5px solid #dce7e0;background:#fff;border-radius:8px;padding:11px;font-size:12px;font-weight:700;color:#778a8e;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:7px}
 .bm-toggle-btn.active.kids{border-color:var(--green);background:#e7f8ee;color:var(--green-dark)}
 .bm-toggle-btn.active.adults{border-color:var(--navy);background:#e8f0f4;color:var(--navy)}
 .bm-footer{margin-top:4px;display:flex;flex-direction:column;gap:12px}
