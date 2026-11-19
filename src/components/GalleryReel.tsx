@@ -211,25 +211,27 @@ export default function GalleryReel({ onBook }: { onBook: () => void }) {
       </div>
 
       {/* grid */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={filter}
-          className="reel-grid"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {shown.map((item, i) => (
-            <VideoTile
-              key={item.id}
-              item={item}
-              featured={i === 0}
-              onBook={onBook}
-            />
-          ))}
-        </motion.div>
-      </AnimatePresence>
+      <div className="reel-container">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={filter}
+            className="reel-grid"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {shown.map((item, i) => (
+              <VideoTile
+                key={item.id}
+                item={item}
+                featured={i === 0}
+                onBook={onBook}
+              />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </section>
   );
 }
