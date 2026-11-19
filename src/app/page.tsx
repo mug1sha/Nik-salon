@@ -135,8 +135,8 @@ export default function Home() {
         <div className="experience-grid">
           <Reveal className="experience-card kids-card">
             <div className="experience-photo">
-              <Image src="https://images.unsplash.com/photo-1519238263530-99d8f4d6c7a4?auto=format&fit=crop&w=1100&q=90"
-                alt="Happy child smiling" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"cover"}} />
+              <Image src="/images/kids logo.jpg"
+                alt="NIK Kids" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"cover"}} />
               <span className="photo-tag">FOR OUR LITTLE ROYALS</span>
             </div>
             <div className="experience-info">
@@ -150,8 +150,8 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.12} className="experience-card adults-card">
             <div className="experience-photo">
-              <Image src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1100&q=90"
-                alt="Confident adult portrait" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"cover"}} />
+              <Image src="/images/Adult logo.jpg"
+                alt="NIK Adults" fill sizes="(max-width:650px) 88vw, 44vw" style={{objectFit:"cover"}} />
               <span className="photo-tag">FOR THE GROWN-UPS</span>
             </div>
             <div className="experience-info">
